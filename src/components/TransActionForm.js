@@ -1,9 +1,9 @@
 import { useState } from "react/cjs/react.development";
 
-const TransActionForm = ({ addTransaction }) => {
+const TransActionForm = ({ addTransaction, setIsShow }) => {
     const[formValues, setFormValues] = useState({
       type:"expense",
-      amount: 0,
+      amount: "",
       desc: ""
     })
     const changeHandler = (e) => {
@@ -12,6 +12,7 @@ const TransActionForm = ({ addTransaction }) => {
     const submitHandler = (e) => {
         e.preventDefault()
         addTransaction(formValues)
+        setIsShow(false);
     }
     return ( 
         <form onSubmit={submitHandler}>
@@ -20,32 +21,36 @@ const TransActionForm = ({ addTransaction }) => {
             name="desc" 
             onChange={changeHandler}
             value={formValues.desc}
+            placeholder="description"
             />
             <input 
             type="number" 
             name="amount" 
             onChange={changeHandler}
             value={formValues.amount}
+            placeholder="amount"
             />
-            <div>
+            <div className="radioBox">
                 <input 
                 type="radio" 
                 value="expense" 
                 name="type" 
                 onChange={changeHandler}
                 checked={formValues.type === "expense"}
+                id="expense"
                 />
-                <label>expense</label>
+                <label htmlFor="expense">expense</label>
                 <input 
                 type="radio" 
                 value="income" 
                 name="type" 
                 onChange={changeHandler}
                 checked={formValues.type === "income"}
+                id="income"
                 />
-                <label>income</label>
+                <label htmlFor="income">income</label>
             </div>
-            <button type="submit">Add transaction</button>
+            <button className="btn primary" type="submit">Add transaction</button>
         </form>
      );
 }
